@@ -1,0 +1,7 @@
+.main {
+    width: 630px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 264px;
+    gap: 20px;
+}
