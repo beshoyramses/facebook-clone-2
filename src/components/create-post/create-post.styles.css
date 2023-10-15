@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 .user-img {
     width: 37px;
     border-radius: 50%;
@@ -51,58 +50,4 @@
 
 .box-items .box-item img {
     width: 30px;
-=======
-.user-img {
-    width: 37px;
-    border-radius: 50%;
-}
-
-.create-post {
-    margin-top: 13px;
-    background-color: #fff;
-    padding: 14px 12px;
-    border-radius: 10px;
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
-
-.create-post .post {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-}
-
-.create-post .post input {
-    background-color: #E9EBEE;
-    padding: 9px 10px;
-    width: 380px;
-    outline: none;
-    border: none;
-    border-radius: 20px;
-    font-size: 17px;
-}
-
-.box-items {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    border-top: 1px solid rgb(224, 220, 220);
-    margin-top: 13px;
-}
-
-.box-items .box-item {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    margin-top: 20px;
-    color: gray;
-    font-size: 17px;
-    font-weight: 500;
-}
-
-.box-items .box-item img {
-    width: 30px;
->>>>>>> dbb312af7a7cf09d9cb13326355f28a6853049fa
 }

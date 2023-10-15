@@ -6,13 +6,17 @@ import { Fragment } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Home from './components/routes/Home';
 import LoginComponent from './components/login/login.component';
+import { useContext } from 'react';
+import { UserContext } from './context/userContext/user.context';
+
+
 function App() {
+  const {currentUser} = useContext(UserContext)
   return (
     <Fragment>
      <Routes>
       <Route path="/" element={<HeaderComponent />}>
-      <Route index element={<Home />}></Route>
-      <Route path='/login' element={<LoginComponent />}></Route>
+      <Route index element={currentUser != null ? <Home/>:<LoginComponent />}></Route>
       </Route>
     </Routes>
    </Fragment>

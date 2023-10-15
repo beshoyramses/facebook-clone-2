@@ -6,15 +6,21 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import Divider from '@mui/material/Divider';
 import { popup, createUserDocumentFromAuth } from '../../utils/firebase';
-
-const onSignInWithGoogleHandler = async () => {
-    const {user} = await popup();
-    createUserDocumentFromAuth(user);
-    console.log(user)
-}
+import { useContext } from 'react';
+import {UserContext} from "../../context/userContext/user.context";
+import { useNavigate } from 'react-router-dom';
 
 const LoginComponent = () => {
+  const {setCurrentUser,currentUser} = useContext(UserContext);
+  const navigate = useNavigate();
 
+  const onSignInWithGoogleHandler = async () => {
+    const {user} = await popup();
+    createUserDocumentFromAuth(user);
+    setCurrentUser(user);
+    console.log(currentUser)
+    navigate("/")
+}
 
 
     return (
