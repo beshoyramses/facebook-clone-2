@@ -1,0 +1,41 @@
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 65px);
+}
+
+.login form {
+   background-color: #fff;
+   padding: 20px 15px;
+   border-radius: 7px;
+   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+   width: 400px;
+   height: 300px;
+}
+
+.login form .button , .login form .signup,.login form .google {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 25px;
+    width: 100%;
+}
+.login form .link {
+    display: block;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+
+.login .inputs-container .input-field {
+   width: 100%;
+}
+
+.login .inputs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
