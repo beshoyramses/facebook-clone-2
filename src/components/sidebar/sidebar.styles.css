@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 .sidebar .container {
     padding-left: 30px;
     display: flex;
     flex-direction: column;
+=======
+.sidebar .container {
+    padding-left: 30px;
+    display: flex;
+    flex-direction: column;
+>>>>>>> dbb312af7a7cf09d9cb13326355f28a6853049fa
 }

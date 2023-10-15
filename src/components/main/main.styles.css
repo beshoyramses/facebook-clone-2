@@ -1,7 +1,16 @@
+<<<<<<< HEAD
 .main {
     width: 630px;
     display: flex;
     flex-direction: column;
     padding-left: 264px;
     gap: 20px;
+=======
+.main {
+    width: 630px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 264px;
+    gap: 20px;
+>>>>>>> dbb312af7a7cf09d9cb13326355f28a6853049fa
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .header {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     background-color: #fff;
@@ -102,4 +103,110 @@
 
 .header .container .header-center a:hover {
     background-color: #E9EBEE;
+=======
+.header {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    background-color: #fff;
+}
+
+.header .container {
+    display: flex;
+    padding: 10px 30px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header .container .search-box {
+    display: flex;
+    align-items: center;
+}
+.header .container .header-left {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.header .container .header-left .logo {
+   width: 45px;
+}
+
+.header .container .search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #E9EBEE;
+    padding: 8px 14px;
+    padding-bottom: 9px;
+    border-radius: 22px;
+    gap: 10px;
+}
+.header .container .search-box input {
+    all: unset;
+}
+
+.header .container .search-box .search-icon {
+    font-size: 24px;
+    color: #6d7076;
+}
+
+.header .container .header-center {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header .container .header-center .icon-center {
+    color: #45484d;
+    font-size: 28px;
+}
+
+.header .container .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header .container .header-right img {
+   width: 37px;
+   border-radius: 50%;
+} 
+
+.header .container .header-right .icon-center {
+   transition: all .3s;
+   background-color: #E9EBEE;
+   padding: 6px;
+   border-radius: 50%;
+}
+
+.header .container .header-right .icon-center:hover {
+   background-color: #ccccd4;
+}
+
+.header .container .header-center a.active .icon-center {
+    color: #0866FF;
+}
+
+.header .container .header-center a.active {
+    position: relative;
+}
+
+.header .container .header-center a.active::before {
+    content: "";
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    height: 3px;
+    width: 110px;
+    transform: translateX(-50%);
+    background-color: #0866FF;
+}
+.header .container .header-center a {
+    padding: 5px 50px;
+    transition: all .3s linear;
+    border-radius: 7px;
+}
+
+.header .container .header-center a:hover {
+    background-color: #E9EBEE;
+>>>>>>> dbb312af7a7cf09d9cb13326355f28a6853049fa
 }
