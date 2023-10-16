@@ -11,12 +11,13 @@ import { UserContext } from './context/userContext/user.context';
 
 
 function App() {
-  const {currentUser} = useContext(UserContext)
+  const {currentUser} = useContext(UserContext);
+
   return (
     <Fragment>
      <Routes>
       <Route path="/" element={<HeaderComponent />}>
-      <Route index element={currentUser != null ? <Home/>:<LoginComponent />}></Route>
+      {currentUser != null ?  <Route index element={<Home />}></Route> : <Route index element={<LoginComponent />}></Route>} 
       </Route>
     </Routes>
    </Fragment>

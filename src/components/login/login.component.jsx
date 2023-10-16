@@ -16,7 +16,7 @@ const LoginComponent = () => {
 
   const onSignInWithGoogleHandler = async () => {
     const {user} = await popup();
-    createUserDocumentFromAuth(user);
+    await createUserDocumentFromAuth(user);
     setCurrentUser(user);
     console.log(currentUser)
     navigate("/")

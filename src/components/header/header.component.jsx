@@ -16,7 +16,7 @@ import { UserContext } from '../../context/userContext/user.context';
 const HeaderComponent = () => {
    const {currentUser} = useContext(UserContext);
 
- const photo = currentUser.photoURL;
+ const photo = currentUser != null ? currentUser.photoURL: null;
 
     return (
        <Fragment>
