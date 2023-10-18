@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, getDoc, setDoc, doc } from "firebase/firestore";
-import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { Password } from "@mui/icons-material";
 // Your web app's Firebase configuration
 
 const firebaseConfig = {
@@ -22,6 +23,7 @@ const auth = new getAuth();
 const provider = new GoogleAuthProvider();
 
 export const popup = () => signInWithPopup(auth, provider);
+export const SignUpWithEmailAndPassword = async (email, password) => createUserWithEmailAndPassword(auth, email, password)
 
 provider.setCustomParameters({
   prompt: "select_account",

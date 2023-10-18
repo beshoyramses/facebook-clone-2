@@ -8,19 +8,22 @@ import Home from './components/routes/Home';
 import LoginComponent from './components/login/login.component';
 import { useContext } from 'react';
 import { UserContext } from './context/userContext/user.context';
-
+import SignupComponent from './components/signup/signup.component';
 
 function App() {
-  const {currentUser} = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
 
   return (
     <Fragment>
-     <Routes>
-      <Route path="/" element={<HeaderComponent />}>
-      {currentUser != null ?  <Route index element={<Home />}></Route> : <Route index element={<LoginComponent />}></Route>} 
-      </Route>
-    </Routes>
-   </Fragment>
+      <Routes>
+        {currentUser != null ? (
+          <Route path='/' element={<Home />} />
+        ) : (
+          <Route path="/" element={<LoginComponent />} />
+        )}
+        <Route path="/signup" element={<SignupComponent />} />
+      </Routes>
+    </Fragment>
   );
 }
 

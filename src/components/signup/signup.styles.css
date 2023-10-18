@@ -1,11 +1,11 @@
-.login {
+.signup {
     display: flex;
     align-items: center;
     justify-content: center;
     height: calc(100vh - 65px);
 }
 
-.login form {
+.signup form {
    background-color: #fff;
    padding: 20px 15px;
    border-radius: 7px;
@@ -14,15 +14,14 @@
    height: 300px;
 }
 
-.login form .button , .login form .signup-button,.login form .google {
-    text-decoration: none;
+.signup form .button , .signup form .create-account,.signup form .google {
     margin-left: auto;
     margin-right: auto;
     display: block;
-    margin-top: 25px;
+    margin-top: -5px;
     width: 100%;
 }
-.login form .link {
+.signup form .link {
     display: block;
     text-align: center;
     margin-top: 5px;
@@ -30,11 +29,11 @@
 }
 
 
-.login .inputs-container .input-field {
+.signup .inputs-container .input-field {
    width: 100%;
 }
 
-.login .inputs-container {
+.signup .inputs-container {
     display: flex;
     flex-direction: column;
     gap: 15px;

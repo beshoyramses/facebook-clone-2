@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import SidebarComponent from '../sidebar/sidebar.component';
 import MainComponent from '../main/main.component';
 import "./Home.css";
-import { useContext } from 'react';
-import { UserContext } from '../../context/userContext/user.context';
+import HeaderComponent from '../header/header.component';
+
+
 const Home = () => {
-    const {currentUser} = useContext(UserContext)
     return (
+       <Fragment>
+          <HeaderComponent />
         <div className='home'>
-            <SidebarComponent />
-            <MainComponent />
+           <SidebarComponent />
+           <MainComponent />
         </div>
+       </Fragment>
     );
 }
 
