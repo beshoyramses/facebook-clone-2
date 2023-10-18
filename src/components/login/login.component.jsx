@@ -1,19 +1,46 @@
-import React from 'react';
+import React, {useState} from "react";
 import "./login.styles.css";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
-import { popup, createUserDocumentFromAuth } from '../../utils/firebase';
-import { useContext } from 'react';
-import {UserContext} from "../../context/userContext/user.context";
+import { Link } from "react-router-dom";
+import { popup, createUserDocumentFromAuth, SignInAuthWithEmailAndPassword } from "../../utils/firebase";
+import { useContext } from "react";
+import { UserContext } from "../../context/userContext/user.context";
+import { useNavigate } from "react-router-dom";
 
-import { useNavigate } from 'react-router-dom';
 const LoginComponent = () => {
-  const { setCurrentUser } = useContext(UserContext);
+  const defaultFormFields = {
+    email: "",
+    password: "",
+  };
+
   const navigate = useNavigate();
+  const { setCurrentUser } = useContext(UserContext);
+  const [formFields, setFormFields] = useState(defaultFormFields);
+  let { email, password } = formFields;
+
+  const onChangeHandler = (event) => {
+    const { name, value } = event.target;
+    setFormFields({ ...formFields, [name]: value });
+  };
+
+   const signin = async () => {
+    try {
+      console.log(email)
+      const { user } = await SignInAuthWithEmailAndPassword(email, password);
+      setCurrentUser(user);
+      console.log(user)
+      navigate("/");
+    } catch (error) {
+     alert(error.code)
+    }
+    setFormFields(defaultFormFields);
+  };
+   
 
   const onSignInWithGoogleHandler = async () => {
-    const { user } = await popup();
+    const {user} = await popup();
+    console.log(user)
     await createUserDocumentFromAuth(user);
     setCurrentUser(user);
     navigate("/");
@@ -29,6 +56,8 @@ const LoginComponent = () => {
             id="outlined-size-small"
             defaultValue=""
             size="small"
+            name="email"
+            onChange={onChangeHandler}
           />
           <TextField
             className="input-field"
@@ -37,13 +66,15 @@ const LoginComponent = () => {
             defaultValue=""
             size="small"
             type="password"
+            name="password"
+            onChange={onChangeHandler}
           />
         </div>
         <Button
           variant="contained"
           disableElevation
           className="button"
-          onClick={onSignInWithGoogleHandler}
+          onClick={signin}
         >
           Sign In
         </Button>

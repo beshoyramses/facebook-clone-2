@@ -38,7 +38,7 @@ const SignupComponent = () => {
       const {user} = await SignUpWithEmailAndPassword(email,password);
       user.displayName = username;
       user.photoURL = img;
-      await createUserDocumentFromAuth(user);
+      await createUserDocumentFromAuth(user,img);
       setCurrentUser(user);
       navigate("/")
 
@@ -47,8 +47,7 @@ const SignupComponent = () => {
           alert("email is already use, try another one")
       }
       else {
-          alert("write a good password");
-          return false;
+          alert(error.code)
       }
   }
   setFormFields(defaultFormFields)

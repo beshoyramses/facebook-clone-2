@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, getDoc, setDoc, doc } from "firebase/firestore";
-import { GoogleAuthProvider, signInWithPopup, getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { Password } from "@mui/icons-material";
 // Your web app's Firebase configuration
 
@@ -23,7 +23,10 @@ const auth = new getAuth();
 const provider = new GoogleAuthProvider();
 
 export const popup = () => signInWithPopup(auth, provider);
-export const SignUpWithEmailAndPassword = async (email, password) => createUserWithEmailAndPassword(auth, email, password)
+export const SignUpWithEmailAndPassword = async (email, password) => createUserWithEmailAndPassword(auth, email, password);
+export const SignInAuthWithEmailAndPassword = async (email, password) => {
+return await signInWithEmailAndPassword(auth, email, password);
+};
 
 provider.setCustomParameters({
   prompt: "select_account",
@@ -32,15 +35,15 @@ provider.setCustomParameters({
 export const createUserDocumentFromAuth = async (userAuth) => {
   if (!userAuth) return;
 
-  const userDocRef = doc(db, "users", userAuth.uid);
+const userDocRef = doc(db, "users", userAuth.uid);
 
-  const userSnapShot = await getDoc(userDocRef);
+const userSnapShot = await getDoc(userDocRef);
 
-  if (!userSnapShot.exists()) {
+if (!userSnapShot.exists()) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
 
-    try {
+try {
       await setDoc(userDocRef, {
         displayName,
         email,
@@ -51,6 +54,7 @@ export const createUserDocumentFromAuth = async (userAuth) => {
     }
   }
 
-  return userDocRef;
+return userDocRef;
 
-}
+};
+
