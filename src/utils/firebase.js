@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, getDoc, setDoc, doc } from "firebase/firestore";
 import { GoogleAuthProvider, signInWithPopup, getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { Password } from "@mui/icons-material";
+
 // Your web app's Firebase configuration
 
 const firebaseConfig = {
@@ -40,7 +40,7 @@ const userDocRef = doc(db, "users", userAuth.uid);
 const userSnapShot = await getDoc(userDocRef);
 
 if (!userSnapShot.exists()) {
-    const { displayName, email } = userAuth;
+    const { displayName, email,photoURL } = userAuth;
     const createdAt = new Date();
 
 try {
@@ -48,13 +48,17 @@ try {
         displayName,
         email,
         createdAt,
+        photoURL,
       });
     } catch (error) {
       console.log(error); // Log the error to the console
     }
   }
-
 return userDocRef;
 
 };
 
+export const getUserDocument = async (uid) => {
+  const docRef = db.collection('users').doc(uid); // Assuming 'users' is your collection name
+  return await docRef.get();
+};

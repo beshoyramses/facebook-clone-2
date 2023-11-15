@@ -18,7 +18,7 @@ const SignupComponent = () => {
    }
 
   const navigate = useNavigate()
-  const {setCurrentUser} = useContext(UserContext);
+  const {setCurrentUser, currentUser} = useContext(UserContext);
   const [formFields, setFormFields] = useState(defaultFormFields);
   let {email, password,  repeatPassword, username, img} = formFields;
 
@@ -37,9 +37,7 @@ const SignupComponent = () => {
   try {
       const {user} = await SignUpWithEmailAndPassword(email,password);
       user.displayName = username;
-      user.photoURL = img;
-      await createUserDocumentFromAuth(user,img);
-      setCurrentUser(user);
+      await createUserDocumentFromAuth(user)
       navigate("/")
 
   } catch (error) {

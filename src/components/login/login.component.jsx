@@ -15,7 +15,7 @@ const LoginComponent = () => {
   };
 
   const navigate = useNavigate();
-  const { setCurrentUser } = useContext(UserContext);
+  const { setCurrentUser, currentUser } = useContext(UserContext);
   const [formFields, setFormFields] = useState(defaultFormFields);
   let { email, password } = formFields;
 
@@ -26,10 +26,8 @@ const LoginComponent = () => {
 
    const signin = async () => {
     try {
-      console.log(email)
       const { user } = await SignInAuthWithEmailAndPassword(email, password);
       setCurrentUser(user);
-      console.log(user)
       navigate("/");
     } catch (error) {
      alert(error.code)

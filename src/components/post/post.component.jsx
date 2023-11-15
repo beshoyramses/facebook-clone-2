@@ -1,32 +1,43 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import "./post.styles.css";
-import { useContext } from 'react';
 import { UserContext } from '../../context/userContext/user.context';
 
-const PostComponent = (props) => {
-    const {title, userName, imgLink, time} = props;
+const PostComponent = ({props}) => {
+    
     const {currentUser} = useContext(UserContext);
+    const photo = currentUser["photoURL"];
+    const userName = currentUser["displayName"];
+    const {title, link} = props;
+    const date = new Date();
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    console.log(currentUser, props);
+    const month = monthNames[date.getMonth()];
+    const day = date.getDate();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    
+    const formattedTime = `${month} ${day} at ${hours % 12}:${minutes < 10 ? '0' + minutes : minutes} ${ampm}`;
 
-    const photo = currentUser.photoURL;
 
     return (
         <div className='post-container'>
             <div className="post-data">
-            <img src={photo} alt="" />
+            <img src={photo} alt="user" onError={(e)=>{e.target.onerror = null; e.target.src="default_image.jpg"}}/>
             <div className="info">
-            <h4 className="username">Beshoy33 <span>uploaded a photo</span></h4>
-            <div className="time">October 11 at 7pm</div>
-
+            <h4 className="username">{userName} <span>uploaded a photo</span></h4>
+            <div className="time">{formattedTime}</div>
             </div>
             </div>
 
             <div className="title">
-                   this is a test fot the title please build some thing good
+                   {title}
             </div>
-
-            <img src="https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=600" alt="" className='main-img'/>
+            <img src={link} alt="" className='main-img'/>
         </div>
     );
-}
+};
 
 export default PostComponent;

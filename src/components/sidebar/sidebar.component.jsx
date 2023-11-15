@@ -14,12 +14,16 @@ import { UserContext } from '../../context/userContext/user.context';
 const SidebarComponent = () => {
 
      const { currentUser } = useContext(UserContext);
-     const photo = currentUser.photoURL;
+     const photo = currentUser["photoURL"];
+     const userName = currentUser["displayName"];
+
+     console.log(photo)
+
 
     return (
         <div className='sidebar'>
            <div className="container">
-           <SidebarItemComponent img={photo} text="Beshoy ramses"/>
+           <SidebarItemComponent img={photo} text={userName}/>
            <SidebarItemComponent img={friend} text={"Find Friends"}/>
            <SidebarItemComponent img={time} text={"Memories"}/>
            <SidebarItemComponent img={save} text={"Saves"}/>
