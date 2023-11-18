@@ -5,9 +5,7 @@ import { UserContext } from '../../context/userContext/user.context';
 const PostComponent = ({props}) => {
     
     const {currentUser} = useContext(UserContext);
-    const photo = currentUser["photoURL"];
-    const userName = currentUser["displayName"];
-    const {title, link} = props;
+    const {title, link, photoURL, email, name, timestamp} = props;
     const date = new Date();
     const monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
@@ -25,9 +23,9 @@ const PostComponent = ({props}) => {
     return (
         <div className='post-container'>
             <div className="post-data">
-            <img src={photo} alt="user" onError={(e)=>{e.target.onerror = null; e.target.src="default_image.jpg"}}/>
+            <img src={photoURL} alt="user" onError={(e)=>{e.target.onerror = null; e.target.src="default_image.jpg"}}/>
             <div className="info">
-            <h4 className="username">{userName} <span>uploaded a photo</span></h4>
+            <h4 className="username">{name} <span>uploaded a photo</span></h4>
             <div className="time">{formattedTime}</div>
             </div>
             </div>
