@@ -6,12 +6,24 @@ import face from "../../images/face.svg";
 import { UserContext } from '../../context/userContext/user.context';
 import { PostsContext } from '../../context/userContext/posts.context';
 import {writePosts} from '../../utils/firebase';
+
+const date = new Date();
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+const month = monthNames[date.getMonth()];
+const day = date.getDate();
+const hours = date.getHours();
+const minutes = date.getMinutes();
+const ampm = hours >= 12 ? 'pm' : 'am';
+
+const formattedTime = `${month} ${day} at ${hours % 12}:${minutes < 10 ? '0' + minutes : minutes} ${ampm}`;
+
 const CreatePostComponent = () => {
   const defaultFormFields = {
     title: "",
     link: "",
   };
-
   const { currentUser } = useContext(UserContext);
 
   const photo = currentUser.photoURL;
@@ -27,9 +39,9 @@ const CreatePostComponent = () => {
   const postHandler = async () => {
     try {
       // Check if currentUser and its properties are defined
-      if (currentUser.uid && currentUser.displayName && currentUser.email && currentUser.photoURL && link && title) {
+      if (currentUser.uid && currentUser.displayName && currentUser.email && currentUser.photoURL && link && title && formattedTime) {
         // Call the writePosts function to store the post in the database
-        await writePosts(currentUser.uid, currentUser.displayName, currentUser.email, currentUser.photoURL, Date.now(), link, title);
+        await writePosts(currentUser.uid, currentUser.displayName, currentUser.email, currentUser.photoURL, formattedTime, link, title);
 
 
       } else {

@@ -2,7 +2,9 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, getDoc, setDoc, doc } from "firebase/firestore";
 import { GoogleAuthProvider, signInWithPopup, getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
-import { getDatabase, ref, push, set, update, remove, get } from "firebase/database";
+import { getDatabase, ref, push, set, update, remove, get, onValue } from "firebase/database";
+import { useContext } from "react";
+import {PostsContext} from '../context/userContext/posts.context.js';
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAXLmDqK5nmabn9Cn_O_Q2wwpm8BS9XRm0",
@@ -17,7 +19,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app); 
-const realTimeDatabase = getDatabase(app);
+export const realTimeDatabase = getDatabase(app);
 // Initialize Firebase
 const auth = getAuth(); // Use getAuth() to initialize auth
 const provider = new GoogleAuthProvider();
@@ -31,6 +33,7 @@ export const SignInAuthWithEmailAndPassword = async (email, password) => {
 provider.setCustomParameters({
   prompt: "select_account",
 });
+
 
 export const createUserDocumentFromAuth = async (userAuth) => {
   if (!userAuth) return;
@@ -170,6 +173,7 @@ export const writePosts = async (uid, name, email, photoURL, timestamp, link, ti
       photoURL,
       timestamp,
       link,
+      title,
     });
 
     console.log("Post added successfully!");
@@ -180,40 +184,38 @@ export const writePosts = async (uid, name, email, photoURL, timestamp, link, ti
   }
 };
 
-const postsRef = ref(realTimeDatabase, 'posts');
+const postRef = ref(realTimeDatabase, 'posts');
 
-// Function to get all posts
-export const getAllPostsFromRealtimeDatabase = async () => {
-  try {
-    // Fetch the data from the 'posts' node
-    const snapshot = await get(postsRef);
+export const getPosts = async () => {
+  return new Promise((resolve) => {
+    onValue(postRef, (snapshot) => {
+      const data = snapshot.val();
 
-    if (snapshot.exists()) {
-      // Convert the snapshot to an array of posts
-      const allPosts = [];
+      if (!data) {
+        resolve([]);
+        return;
+      }
 
-      // Iterate through each user's posts
-      snapshot.forEach((userSnapshot) => {
-        const userId = userSnapshot.key;
-        const userPosts = userSnapshot.val();
-
-        // Iterate through each post of the user and add it to the allPosts array
-        Object.keys(userPosts).forEach((postId) => {
-          const post = userPosts[postId];
-          allPosts.push({
-            userId,
-            postId,
-            ...post,
-          });
+      const dataArray = Object.keys(data).map((userId) => {
+        return Object.keys(data[userId]).map((postId) => {
+          const post = data[userId][postId];
+          return {
+            id: postId,
+            title: post.title,
+            link: post.link,
+            timestamp: post.timestamp,
+            uid: post.uid,
+            name: post.name,
+            email: post.email,
+            photoURL: post.photoURL,
+            date: post.date,
+          };
         });
       });
 
-      return allPosts;
-    } else {
-      return [];
-    }
-  } catch (error) {
-    console.error("Error getting all posts:", error);
-    throw error;
-  }
+      resolve(dataArray.flat());
+    });
+  });
 };
+
+console.log(getPosts());
