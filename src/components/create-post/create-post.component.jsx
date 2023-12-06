@@ -35,15 +35,17 @@ const CreatePostComponent = () => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
   };
+  
 
+  let likes = [];
+  
   const postHandler = async () => {
     try {
       // Check if currentUser and its properties are defined
       if (currentUser.uid && currentUser.displayName && currentUser.email && currentUser.photoURL && link && title && formattedTime) {
         // Call the writePosts function to store the post in the database
-        await writePosts(currentUser.uid, currentUser.displayName, currentUser.email, currentUser.photoURL, formattedTime, link, title);
-
-
+        await writePosts(currentUser.uid, currentUser.displayName, currentUser.email, currentUser.photoURL, formattedTime, link, title, likes);
+  
       } else {
         console.error("One or more required properties in currentUser are undefined");
       }
@@ -56,7 +58,7 @@ const CreatePostComponent = () => {
       <div className="box">
         <div className="post">
           <img src={photo} alt="user" className='user-img' />
-          <input type="text" placeholder="What's up on your mind, Beshoy" onChange={onChangeHandler} name='title' value={title} />
+          <input type="text" placeholder={`What's up on your mind, ${currentUser.displayName}`} onChange={onChangeHandler} name='title' value={title} />
           <input type="text" placeholder="Put the link" onChange={onChangeHandler} name='link' value={link} />
           <button onClick={postHandler} className='button'>Post</button>
         </div>

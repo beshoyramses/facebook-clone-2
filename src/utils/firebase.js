@@ -147,13 +147,13 @@ export const addPost = async (userId, title, link) => {
   }
 };
 
-export const writePosts = async (uid, name, email, photoURL, timestamp, link, title) => {
+export const writePosts = async (uid, name, email, photoURL, timestamp, link, title, likes) => {
   try {
     const userPostsRef = ref(realTimeDatabase, `posts/${uid}`);
     const newPostRef = push(userPostsRef);
 
     // Check for undefined properties
-    if (!uid || !name || !email || !photoURL || !timestamp || !link || !title) {
+    if (!uid || !name || !email || !photoURL || !timestamp || !link || !title || likes === undefined) {
       console.error("One or more required properties are undefined");
       console.error("uid:", uid);
       console.error("name:", name);
@@ -162,6 +162,7 @@ export const writePosts = async (uid, name, email, photoURL, timestamp, link, ti
       console.error("timestamp:", timestamp);
       console.error("link:", link);
       console.error("title:", title);
+      console.error("likes:", likes);
       throw new Error("One or more required properties are undefined");
     }
 
@@ -174,6 +175,7 @@ export const writePosts = async (uid, name, email, photoURL, timestamp, link, ti
       timestamp,
       link,
       title,
+      likes,
     });
 
     console.log("Post added successfully!");
@@ -183,6 +185,7 @@ export const writePosts = async (uid, name, email, photoURL, timestamp, link, ti
     throw error;
   }
 };
+
 
 const postRef = ref(realTimeDatabase, 'posts');
 
@@ -209,6 +212,7 @@ export const getPosts = async () => {
             email: post.email,
             photoURL: post.photoURL,
             date: post.date,
+            likes: post.likes,
           };
         });
       });
@@ -218,4 +222,93 @@ export const getPosts = async () => {
   });
 };
 
-console.log(getPosts());
+export const addLike = async (postId, userId, likedPerson) => {
+  try {
+    const postRef = ref(realTimeDatabase, `posts/${userId}/${postId}/likes`);
+    console.log(postRef)
+    const likesSnapshot = await get(postRef);
+
+    if (likesSnapshot.exists()) {
+      // If the likes node already exists, update the user's like
+      const likesData = likesSnapshot.val();
+      await update(postRef, {
+        ...likesData,
+        [likedPerson]: true,
+      });
+      
+      console.log("added like")
+    } else {
+      // If the likes node doesn't exist, create a new one
+      await set(postRef, {
+        [userId]: true,
+      });
+    }
+  } catch (error) {
+    console.error("Error adding like:", error);
+    throw error;
+  }
+};
+
+export const removeLike = async (postId, userId, likedPerson) => {
+  try {
+    const postRef = ref(realTimeDatabase, `posts/${userId}/${postId}/likes`);
+    const likesSnapshot = await get(postRef);
+
+    if (likesSnapshot.exists()) {
+      const likesData = likesSnapshot.val();
+
+      // Check if the user has already liked the post
+      if (likesData[likedPerson]) {
+        // Remove the user's like from the likes node
+        likesData[likedPerson] = false;
+        await update(postRef, likesData);
+
+        console.log("removed like");
+      } else {
+        console.warn("User has not liked the post");
+      }
+    } else {
+      console.warn("Likes node does not exist");
+    }
+  } catch (error) {
+    console.error("Error removing like:", error);
+    throw error;
+  }
+};
+
+
+export const addComment = async (postId, userId, commenterPhoto, text) => {
+  try {
+    const commentsRef = ref(realTimeDatabase, `posts/${userId}/${postId}/comments`);
+    const newCommentRef = push(commentsRef);
+
+    await set(newCommentRef, {
+      commenterPhoto,
+      text,
+      timestamp: Date.now(),
+    });
+
+    console.log("Comment added successfully!");
+    return newCommentRef.key;
+  } catch (error) {
+    console.error("Error adding comment:", error);
+    throw error;
+  }
+};
+
+export const getComments = async (userId, postId) => {
+  try {
+    const commentsRef = ref(realTimeDatabase, `posts/${userId}/${postId}/comments`);
+    const snapshot = await get(commentsRef);
+    if (snapshot.exists()) {
+      // Convert the snapshot to an array of comments
+      const commentsArray = Object.keys(snapshot.val()).map(commentId => snapshot.val()[commentId]);
+      return commentsArray;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+    throw error;
+  }
+};

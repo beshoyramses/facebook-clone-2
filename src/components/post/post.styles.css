@@ -47,3 +47,69 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.post-container .reactions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    border-top: 2px solid rgb(245, 242, 242);
+    border-bottom: 2px solid rgb(245, 242, 242);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.post-container .reactions div span {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-family: cursive;
+    cursor: pointer;
+}
+
+.post-container .reactions div span .thumb-icon {
+    color: #3679a9;
+    cursor: pointer;
+}
+
+.post-container .reactions div span .thumb-icon.clicked {
+    color: #C683D7;
+}
+
+.post-container .comment-section {
+    display: none;
+    flex-direction: column;
+    margin-top: 40px;
+}
+
+.post-container .comment-section.show {
+    display: flex;
+}
+
+.post-container .comment-section .comment {
+    display: flex;
+    align-items: center;
+    background-color: #dddfe3;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.post-container .comment-section .comment img , .post-container .comment-section .write-comment img {
+    width: 36px;
+    height: 36px;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.post-container .comment-section .write-comment {
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}

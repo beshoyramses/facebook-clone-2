@@ -1,11 +1,12 @@
-import React, { useContext, useEffect } from 'react';
-import { onSnapshot } from 'firebase/database';  // Correct import for Realtime Database
-import { ref, onValue } from 'firebase/database';  // Correct import for Realtime Database
+import React, { useContext, useEffect, useMemo } from 'react';
+import { onValue } from 'firebase/database';
+import { ref } from 'firebase/database';
 import { PostsContext } from '../../context/userContext/posts.context';
 import { realTimeDatabase } from '../../utils/firebase';
 import CreatePostComponent from '../create-post/create-post.component';
 import PostComponent from '../post/post.component';
 import "./main.styles.css";
+
 const MainComponent = () => {
   const { currentPosts, setCurrentPosts } = useContext(PostsContext);
 
@@ -20,7 +21,7 @@ const MainComponent = () => {
         return;
       }
 
-      const dataArray = Object.keys(data).map((userId) => {
+      const dataArray = Object.keys(data).flatMap((userId) => {
         return Object.keys(data[userId]).map((postId) => {
           const post = data[userId][postId];
           return {
@@ -32,11 +33,12 @@ const MainComponent = () => {
             name: post.name,
             email: post.email,
             photoURL: post.photoURL,
+            likes: post.likes,
           };
         });
       });
 
-      setCurrentPosts(dataArray.flat());
+      setCurrentPosts(dataArray);
     });
 
     return () => {
