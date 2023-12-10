@@ -1,5 +1,5 @@
 {
-  "homepage": "https://beshoy66q.github.io/fb-clone/",
+  "homepage": "./build/index.html",
   "name": "fb-clone",
   "version": "0.1.0",
   "private": true,
