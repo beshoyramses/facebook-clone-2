@@ -103,3 +103,16 @@
 .header .container .header-center a:hover {
     background-color: #E9EBEE;
 }
+
+@media only screen and (max-width: 600px) {
+    .header .container {
+        padding: 10px 35px;
+        padding-left: 20px;
+    }
+    .header .container .header-center {
+        display: none;
+    }
+    .header .container .search-box {
+        display: none;
+    }
+  }

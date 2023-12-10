@@ -70,3 +70,31 @@
 .button:hover {
     background-color: #45a049;
 }
+
+@media only screen and (max-width: 600px) {
+    .create-post .post {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        flex-direction: column;
+    }
+
+    .create-post {
+        padding-left: 5px;
+        padding-right: 5px;
+        width: 97%;
+    }
+
+    .create-post .post input {
+        width: 90%;
+    }
+
+    .create-post .post img {
+        display: none;
+    }
+
+    .box-items .box-item:nth-child(2), .box-items .box-item:nth-child(3) {
+        display: none;
+    }
+
+  }
