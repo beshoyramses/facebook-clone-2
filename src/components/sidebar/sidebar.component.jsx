@@ -1,38 +1,42 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import "./sidebar.styles.css";
 import SidebarItemComponent from '../sidebar-item/sidebar-item.component';
+import { UserContext } from '../../context/userContext/user.context';
+import { ReactComponent as GroupAddIcon } from '@mui/icons-material/GroupAdd';
+
+// Importing images
 import friend from "../../images/freinds-con.svg";
 import time from "../../images/time.svg";
 import save from "../../images/save.svg";
 import groups from "../../images/groups.svg";
 import video from "../../images/video.svg";
 import marketplace from "../../images/marketplace.svg";
-import { useContext } from 'react';
-import { UserContext } from '../../context/userContext/user.context';
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
+
+const sidebarItems = [
+    { key: '1', img: friend, text: "Find Friends (coming soon)" },
+    { key: '2', img: time, text: "Memories (coming soon)" },
+    { key: '3', img: save, text: "Saves (coming soon)" },
+    { key: '4', img: groups, text: "Groups (coming soon)" },
+    { key: '5', img: video, text: "Videos (coming soon)" },
+    { key: '6', img: marketplace, text: "Marketplace (coming soon)" }
+];
 
 const SidebarComponent = () => {
-
-     const { currentUser } = useContext(UserContext);
-     const photo = currentUser["photoURL"];
-     const userName = currentUser["displayName"];
-
-     console.log(photo)
-
+    const { currentUser } = useContext(UserContext);
+    const photoURL = currentUser?.photoURL;
+    const displayName = currentUser?.displayName;
 
     return (
-        <div className='sidebar'>
-           <div className="container">
-           <SidebarItemComponent img={photo} text={userName}/>
-           <SidebarItemComponent img={"https://cdn-icons-png.flaticon.com/128/3220/3220788.png"} text={"Find Friends lifless mf (comming soon)"}/>
-           <SidebarItemComponent img={time} text={"Memories (comming soon)"}/>
-           <SidebarItemComponent img={save} text={"Saves (comming soon)"}/>
-           <SidebarItemComponent img={groups} text={"Groups (comming soon)"}/>
-           <SidebarItemComponent img={video} text={"Videos (comming soon)"}/>
-           <SidebarItemComponent img={marketplace} text={"Marketplace (comming soon)"}/>
-           </div>
-        </div>
+        <nav className='sidebar'>
+            <div className="container">
+                <SidebarItemComponent img={photoURL} text={displayName} />
+                {sidebarItems.map(item => (
+                    <SidebarItemComponent key={item.key} img={item.img} text={item.text} />
+                ))}
+            </div>
+        </nav>
     );
 }
 
 export default SidebarComponent;
+
